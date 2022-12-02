@@ -1,11 +1,12 @@
 import * as React from 'react';
-
 import clsx from 'clsx';
 import { Box, styled, Theme } from '@mui/system';
 import ModalUnstyled from '@mui/base/ModalUnstyled';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+
+// my library that returns wind name depending on degrees from Open Weather JSON
 import { windDirection } from '../smalls/windDirection/windDirection';
 
 const BackdropUnstyled = React.forwardRef<
