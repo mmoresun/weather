@@ -1,6 +1,6 @@
 
 // import my elements
-import { API_KEY } from '../../App';
+import { API_KEY } from '../../apikey';
 import { IWeatherDataObj, ICityStateEntry, IReducer } from '../../types/types';
 import WeatherCard from '../WeatherCard/WeatherCard';
 
@@ -14,9 +14,9 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { addCityAction } from '../../store/redusers/cityReducer';
 
-const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled,  }: { weatherData: IWeatherDataObj, addDisabled: boolean, setAddDisabled: any}) => {
+const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled, }: { weatherData: IWeatherDataObj, addDisabled: boolean, setAddDisabled: React.Dispatch<React.SetStateAction<boolean>> }) => {
 
-    const myCityList: any = useSelector((state: IReducer) => state.city); 
+    const myCityList: any = useSelector((state: IReducer) => state.city);
 
     const dispatch = useDispatch();
 
@@ -26,8 +26,10 @@ const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled,  }: { weat
         const newCity = {
             url: `https://api.openweathermap.org/data/2.5/weather?q=${weatherData.name}&lang=en&appid=${API_KEY}&units=metric`,
             id: uuid()
-        }        
+        }
+
         // old variant: 
+
         // dispatch({
         //     type: ADD_CITY,
         //     payload: {
@@ -40,7 +42,7 @@ const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled,  }: { weat
         dispatch(addCityAction(newCity));
 
         setAddDisabled(true); // hide search results after the city is added to the list
-        
+
     };
 
     const mappedCityList = myCityList.map(((item: ICityStateEntry) => {
@@ -59,7 +61,7 @@ const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled,  }: { weat
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '20px' }}>
             {weatherData.name &&
-                <div style={{ display: addDisabled ? 'none': 'block', border: '1px dashed black', padding: '0 10px 10px 10px', width: '250px', background: 'rgba(255, 255, 255, .3)' }}>
+                <div style={{ display: addDisabled ? 'none' : 'block', border: '1px dashed black', padding: '0 10px 10px 10px', width: '250px', background: 'rgba(255, 255, 255, .3)' }}>
                     <p>City/Region: <b>{weatherData.name}</b></p>
                     <p>Temperature: <b>{weatherData.temp}°C</b></p>
                     <p>Wind: <b>{weatherData.wind} m/s</b></p>
@@ -67,7 +69,7 @@ const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled,  }: { weat
 
                     <Button
                         onClick={addNewCity}
-                        // disabled={addDisabled ? true : false}
+                    // disabled={addDisabled ? true : false}
                     >
                         Add to my list
                     </Button>

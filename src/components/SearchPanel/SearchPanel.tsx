@@ -8,13 +8,13 @@ const SearchPanel = ({ getCity }: { getCity: any }) => {
         // <div style={{ margin: '20px 0 0 0' }}>
         <Box
             component="form"
-            onSubmit={getCity}
+            onSubmit={() => getCity}
         >
             <TextField
                 size='small'
                 type="text"
                 name='city'
-                placeholder='Enter city'                            
+                placeholder='Enter city'
             />
             <Button
 

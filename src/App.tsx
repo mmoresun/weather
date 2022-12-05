@@ -1,15 +1,13 @@
+
 import { useEffect, useState } from 'react';
 import './App.css';
 import SearchPanel from './components/SearchPanel/SearchPanel';
 import Header from './components/Header/Header';
 import WeatherCardsList from './components/WeatherCardsList/WeatherCardsList';
 import { IWeatherDataObj } from './types/types';
-// import { fetchCity } from './store/redusers/fetchCity';
-// import { useDispatch } from 'react-redux';
+import { API_KEY } from './apikey';
 
-export const API_KEY = 'd74880f2c4824695c7d0c5f3ecae84a0'; // my API Key for open weather map, don't use it
-
-const App = () => {
+const App:React.FC = () => {
 
   // 'Add to my button' switcher to enabled/disabled
   const [addDisabled, setAddDisabled] = useState<boolean>(false);
@@ -19,7 +17,8 @@ const App = () => {
 
   const getCity = (e: any): void => {
     e.preventDefault();
-    setMyCity(e.target.elements.city.value.trim());
+    const cityValue = e.target.elements.city.value as string;
+    setMyCity(cityValue.trim());
 
   };
 
@@ -67,15 +66,8 @@ const App = () => {
 
   }, [myCity]);
 
-  // useEffect(() => {
-  //   getWeather('Kyiv');
-  // }, []);
-
-  // const dispatch = useDispatch();
-
   return (
     <div className="App">
-      {/* <button onClick={() => dispatch<any>(fetchCity())}>Тестовая кнопка thunk</button> */}
       <Header />
       <SearchPanel
         getCity={getCity}
@@ -90,3 +82,4 @@ const App = () => {
 }
 
 export default App;
+
