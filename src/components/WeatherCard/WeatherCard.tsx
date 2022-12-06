@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 // import { REMOVE_CITY } from '../../store/redusers/actions';
 import { removeCityAction } from '../../store/redusers/cityReducer';
 
-const WeatherCard = ({ ...props }) => {
+const WeatherCard: React.FC<any> = ({ ...props }) => {
 
     const dispatch = useDispatch();
 

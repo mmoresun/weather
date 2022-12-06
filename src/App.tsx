@@ -1,33 +1,41 @@
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import SearchPanel from './components/SearchPanel/SearchPanel';
 import Header from './components/Header/Header';
 import WeatherCardsList from './components/WeatherCardsList/WeatherCardsList';
-import { IWeatherDataObj } from './types/types';
+import { IWeatherDataObj, MyFormSubmitEvent } from './types/types';
 import { API_KEY } from './apikey';
 
-const App:React.FC = () => {
+const App: React.FC<any> = () => {
 
   // 'Add to my button' switcher to enabled/disabled
   const [addDisabled, setAddDisabled] = useState<boolean>(false);
 
   // get and set value from search field
-  const [myCity, setMyCity] = useState('');
+  const [myCity, setMyCity] = useState<string>('');
 
-  const getCity = (e: any): void => {
-    e.preventDefault();
-    const cityValue = e.target.elements.city.value as string;
-    setMyCity(cityValue.trim());
 
-  };
+const getCity = (e:  MyFormSubmitEvent): void => {
+  e.preventDefault();
+  setMyCity(e.currentTarget.city.value);
+};
+
+
+  // const getCity = (e: MyFormSubmitEvent): void => {
+  //   e.preventDefault();
+  //   const target = e.target;
+  //   setMyCity(target.city.value.trim());
+  // };
 
   const [weatherData, setWeatherData] = useState({
   } as IWeatherDataObj);
 
   const getWeather = (myCity: string) => {
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_KEY}&units=metric`)
+    const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_KEY}&units=metric`;
+
+    fetch(cityUrl)
       .then((response) => response.json())
       .then((data) => setWeatherData({
         name: data.name,
@@ -66,11 +74,16 @@ const App:React.FC = () => {
 
   }, [myCity]);
 
+  useEffect(() => {
+    getWeather('Kyiv');
+  }, [])
+
   return (
     <div className="App">
       <Header />
       <SearchPanel
         getCity={getCity}
+        setMyCity={setMyCity}
       />
       <WeatherCardsList
         addDisabled={addDisabled}
