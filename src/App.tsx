@@ -7,7 +7,7 @@ import WeatherCardsList from './components/WeatherCardsList/WeatherCardsList';
 import { IWeatherDataObj, MyFormSubmitEvent } from './types/types';
 import { API_KEY } from './apikey';
 
-const App: React.FC<any> = () => {
+const App = () => {
 
   // 'Add to my button' switcher to enabled/disabled
   const [addDisabled, setAddDisabled] = useState<boolean>(false);
