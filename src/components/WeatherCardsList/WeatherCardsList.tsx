@@ -1,20 +1,22 @@
 
 // import my elements
-import { API_KEY } from '../../apikey';
-import { IWeatherDataObj, ICityStateEntry, IReducer } from '../../types/types';
+
+import { ICityStateEntry, IReducer, IWeatherCardsListProps } from '../../types/types';
 import WeatherCard from '../WeatherCard/WeatherCard';
 
-// import some react and third party elements
+// import some react and third party things
 import { v4 as uuid } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-// import material UI elements
+// import material UI things
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { addCityAction } from '../../store/redusers/cityReducer';
 
-const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled, }: { weatherData: IWeatherDataObj, addDisabled: boolean, setAddDisabled: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const API_WEATHER_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+
+const WeatherCardsList: React.FC<IWeatherCardsListProps> = ({ weatherData, addDisabled, setAddDisabled }) => {
 
     const myCityList: any = useSelector((state: IReducer) => state.city);
 
@@ -24,7 +26,7 @@ const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled, }: { weath
         e.preventDefault();
 
         const newCity = {
-            url: `https://api.openweathermap.org/data/2.5/weather?q=${weatherData.name}&lang=en&appid=${API_KEY}&units=metric`,
+            url: `https://api.openweathermap.org/data/2.5/weather?q=${weatherData.name}&lang=en&appid=${API_WEATHER_KEY}&units=metric`,
             id: uuid()
         }
 
@@ -45,6 +47,7 @@ const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled, }: { weath
 
     };
 
+    // mapping myCityList to get a list of weather cards
     const mappedCityList = myCityList.map(((item: ICityStateEntry) => {
         return (
             <WeatherCard
@@ -53,13 +56,13 @@ const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled, }: { weath
         )
     }));
 
+    // re-render component every time then citylist is changed
     useEffect(() => {
-
     }, [myCityList])
 
     return (
 
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             {weatherData.name &&
                 <div style={{ display: addDisabled ? 'none' : 'block', border: '1px dashed black', padding: '0 10px 10px 10px', width: '250px', background: 'rgba(255, 255, 255, .3)' }}>
                     <p>City/Region: <b>{weatherData.name}</b></p>
@@ -69,13 +72,11 @@ const WeatherCardsList = ({ weatherData, addDisabled, setAddDisabled, }: { weath
 
                     <Button
                         onClick={addNewCity}
-                    // disabled={addDisabled ? true : false}
                     >
                         Add to my list
                     </Button>
                 </div>}
             <p><b>{weatherData.error}</b></p>
-
             <Box
                 sx={{
                     display: 'flex',
