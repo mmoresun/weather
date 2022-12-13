@@ -64,9 +64,9 @@ const WeatherCardsList: React.FC<IWeatherCardsListProps> = ({ weatherData, addDi
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             {weatherData.name &&
-                <div style={{ display: addDisabled ? 'none' : 'block', border: '1px dashed black', padding: '0 10px 10px 10px', width: '250px', background: 'rgba(255, 255, 255, .3)' }}>
-                    <p>City/Region: <b>{weatherData.name}</b></p>
-                    <p>Temperature: <b>{weatherData.temp}°C</b></p>
+                <div style={{ display: addDisabled ? 'none' : 'block', border: '1px dashed black', padding: '0 10px 10px 10px', width: '250px', background: 'rgba(255, 255, 255, .3)', margin: '0 0 20px 0' }}>
+                    <p>City or region: <b>{weatherData.name}</b></p>
+                    <p>Local temperature: <b>{weatherData.temp}°C</b></p>
                     <p>Wind: <b>{weatherData.wind} m/s</b></p>
                     <p>Sky: <b>{weatherData.clouds}</b></p>
 
@@ -76,7 +76,7 @@ const WeatherCardsList: React.FC<IWeatherCardsListProps> = ({ weatherData, addDi
                         Add to my list
                     </Button>
                 </div>}
-            <p><b>{weatherData.error}</b></p>
+            <p style={{display: weatherData.error ? '' : 'none'}}><b>{weatherData.error}</b></p>
             <Box
                 sx={{
                     display: 'flex',
