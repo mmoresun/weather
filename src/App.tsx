@@ -1,71 +1,62 @@
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import SearchPanel from './components/SearchPanel/SearchPanel';
 import Header from './components/Header/Header';
 import WeatherCardsList from './components/WeatherCardsList/WeatherCardsList';
 import { IWeatherDataObj, MyFormSubmitEvent } from './types/types';
-import { API_KEY } from './apikey';
+import axios from 'axios';
 
-const App = () => {
+const API_WEATHER_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
-  // 'Add to my button' switcher to enabled/disabled
+console.log(API_WEATHER_KEY);
+
+const App = () => {  
+
+  // 'Add to my button' enabled/disabled switcher
   const [addDisabled, setAddDisabled] = useState<boolean>(false);
 
   // get and set value from search field
   const [myCity, setMyCity] = useState<string>('');
 
-
-const getCity = (e:  MyFormSubmitEvent): void => {
-  e.preventDefault();
-  setMyCity(e.currentTarget.city.value);
-};
-
-
-  // const getCity = (e: MyFormSubmitEvent): void => {
-  //   e.preventDefault();
-  //   const target = e.target;
-  //   setMyCity(target.city.value.trim());
-  // };
+  const getCity = (e: MyFormSubmitEvent): void => {
+    e.preventDefault();
+    setMyCity(e.currentTarget.city.value);
+  };
 
   const [weatherData, setWeatherData] = useState({
   } as IWeatherDataObj);
 
   const getWeather = (myCity: string) => {
-
-    const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_KEY}&units=metric`;
-
-    fetch(cityUrl)
-      .then((response) => response.json())
-      .then((data) => setWeatherData({
-        name: data.name,
-        country: data.sys.country,
-        wind: data.wind.speed,
-        clouds: data.weather[0].description,
-        temp: Math.round(data.main.temp),
-        feels_like: Math.round(data.main.feels_like),
-        pressure: data.main.pressure,
-        humidity: data.main.humidity,
-        icon: data.weather[0].icon,
+    const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_WEATHER_KEY}&units=metric`;
+    axios
+      .get(cityUrl)
+      .then((response) => setWeatherData({
+        name: response.data.name,
+        country: response.data.sys.country,
+        wind: response.data.wind.speed,
+        clouds: response.data.weather[0].description,
+        temp: Math.round(response.data.main.temp),
+        feels_like: Math.round(response.data.main.feels_like),
+        pressure: response.data.main.pressure,
+        humidity: response.data.main.humidity,
+        icon: response.data.weather[0].icon,
         error: undefined
       }))
-      .catch((error) =>
-        error.response === undefined &&
-        setWeatherData({
-          name: undefined,
-          country: undefined,
-          wind: undefined,
-          clouds: undefined,
-          temp: undefined,
-          feels_like: undefined,
-          pressure: undefined,
-          humidity: undefined,
-          icon: undefined,
-          error: `City "${myCity}" is not found`
-        })
-      );
+      .catch(() => setWeatherData({
+        name: undefined,
+        country: undefined,
+        wind: undefined,
+        clouds: undefined,
+        temp: undefined,
+        feels_like: undefined,
+        pressure: undefined,
+        humidity: undefined,
+        icon: undefined,
+        error: `City "${myCity}" is not found`
+      }));
 
-    setAddDisabled(false);
+  setAddDisabled(false);
   };
 
   useEffect(() => {
@@ -74,10 +65,36 @@ const getCity = (e:  MyFormSubmitEvent): void => {
 
   }, [myCity]);
 
-  useEffect(() => {
-    getWeather('Kyiv');
-  }, [])
+  // on the first render, user will see his location and weather
+  useEffect(() => {    
 
+    let localLatitude: number;
+    let localLongitude: number;
+    
+    navigator.geolocation.getCurrentPosition((position) => 
+    {    
+      localLatitude = position.coords.latitude;
+      localLongitude = position.coords.longitude;
+
+      axios
+      .get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${localLatitude}&lon=${localLongitude}&appid=${API_WEATHER_KEY}`)
+      .then((response) => {getWeather(response.data[0].name)})
+      .catch(() => setWeatherData({
+        name: undefined,
+        country: undefined,
+        wind: undefined,
+        clouds: undefined,
+        temp: undefined,
+        feels_like: undefined,
+        pressure: undefined,
+        humidity: undefined,
+        icon: undefined,
+        error: `Location is not defined, sorry`
+      }));
+    });      
+      
+  }, []); 
+  
   return (
     <div className="App">
       <Header />
@@ -96,3 +113,85 @@ const getCity = (e:  MyFormSubmitEvent): void => {
 
 export default App;
 
+
+// async version of getWeather
+  // async function getWeather(myCity: string) {
+
+  //   const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_WEATHER_KEY}&units=metric`;
+
+  //   try {
+  //     const response = await fetch(cityUrl);
+  //     const data = await response.json();
+  //     setWeatherData({
+  //       name: data.name,
+  //       country: data.sys.country,
+  //       wind: data.wind.speed,
+  //       clouds: data.weather[0].description,
+  //       temp: Math.round(data.main.temp),
+  //       feels_like: Math.round(data.main.feels_like),
+  //       pressure: data.main.pressure,
+  //       humidity: data.main.humidity,
+  //       icon: data.weather[0].icon,
+  //       error: undefined
+  //     });
+  //   }
+  //   catch (error) {      
+  //     setWeatherData({
+  //       name: undefined,
+  //       country: undefined,
+  //       wind: undefined,
+  //       clouds: undefined,
+  //       temp: undefined,
+  //       feels_like: undefined,
+  //       pressure: undefined,
+  //       humidity: undefined,
+  //       icon: undefined,
+  //       error: `City "${myCity}" is not found`
+  //     })
+  //   }
+
+  //   setAddDisabled(false);
+  // };
+
+
+  // fetch version of getweather
+  // const getWeather = (myCity: string) => {
+
+  //   const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_WEATHER_KEY}&units=metric`;
+
+  //   fetch(cityUrl)
+  //     .then((response) => response.json())
+  //     .then((data) => setWeatherData({
+  //       name: data.name,
+  //       country: data.sys.country,
+  //       wind: data.wind.speed,
+  //       clouds: data.weather[0].description,
+  //       temp: Math.round(data.main.temp),
+  //       feels_like: Math.round(data.main.feels_like),
+  //       pressure: data.main.pressure,
+  //       humidity: data.main.humidity,
+  //       icon: data.weather[0].icon,
+  //       error: undefined
+  //     }))
+  //     .catch((error) =>
+  //       error.response === undefined &&
+  //       setWeatherData({
+  //         name: undefined,
+  //         country: undefined,
+  //         wind: undefined,
+  //         clouds: undefined,
+  //         temp: undefined,
+  //         feels_like: undefined,
+  //         pressure: undefined,
+  //         humidity: undefined,
+  //         icon: undefined,
+  //         error: `City "${myCity}" is not found`
+  //       })
+  //     );
+
+  //   setAddDisabled(false);
+  // };
+
+// axios version of getweather
+
+  

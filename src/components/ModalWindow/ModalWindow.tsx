@@ -1,4 +1,8 @@
+
+// import react things
 import * as React from 'react';
+
+// import material ui things
 import clsx from 'clsx';
 import { Box, styled, Theme } from '@mui/system';
 import ModalUnstyled from '@mui/base/ModalUnstyled';
@@ -6,9 +10,11 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-// my library that returns wind name depending on degrees from Open Weather JSON
+// import my library that returns wind name depending on degrees from Open Weather 
 import { windDirection } from '../smalls/windDirection/windDirection';
 
+
+// materialize ui modal window settings (it would be easier for me to write my own)
 const BackdropUnstyled = React.forwardRef<
     HTMLDivElement,
     { open?: boolean; className: string }
@@ -72,11 +78,12 @@ export default function ModalWindow({ ...props }) {
                 closeAfterTransition
                 slots={{ backdrop: Backdrop }}
             >
-                <Fade in={props.open} timeout={300}>
+                {/* detailed info for the city at modal window */}
                 
-                    <Box sx={style}>                    
+                <Fade in={props.open} timeout={300}> 
+                    <Box sx={style}>                        
                         <h2 id="transition-modal-title">Weather at {props.cardData.name}, {props.cardData.country}</h2>
-                        <span id="transition-modal-description" style={{ marginTop: '16px' }}>                            
+                        <span id="transition-modal-description" style={{ marginTop: '16px' }}>
                             <Typography variant="body2">Temperature: <b>{props.cardData.temp}°C</b></Typography>
                             <Typography variant="body2">Feels like: <b>{props.cardData.feels_like}°C</b></Typography>
                             <Typography variant="body2">Min. temperature: <b>{props.cardData.temp_min}°C</b></Typography>

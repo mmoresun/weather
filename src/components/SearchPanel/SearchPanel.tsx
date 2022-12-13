@@ -7,25 +7,27 @@ import Box from '@mui/material/Box';
 const SearchPanel: React.FC<any> = ({ getCity }) => {
 
     return (
-        <Box
-            component="form"
-            onSubmit={getCity}
-            
-        >
-            <TextField
-                size='small'
-                type="text"
-                name='city'
-                placeholder='Enter city'
-            // onChange={(e) => setMyCity(e.target.value)}
-            />
-            <Button
-
-                type="submit"
+        <div style={{marginBottom: '30px'}}>
+            <Box
+                component="form"
+                onSubmit={getCity}
+                name='searchpanel'
             >
-                Get weather
-            </Button>
-        </Box>
+                <TextField
+                    size='small'
+                    type="text"
+                    name='city'
+                    placeholder='Enter city'
+                // onChange={(e) => setMyCity(e.target.value)}
+                />
+                <Button
+
+                    type="submit"
+                >
+                    Get weather
+                </Button>
+            </Box>
+        </div>
     );
 }
 
