@@ -9,8 +9,6 @@ import axios from 'axios';
 
 const API_WEATHER_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
-console.log(API_WEATHER_KEY);
-
 const App = () => {  
 
   // 'Add to my button' enabled/disabled switcher
@@ -27,37 +25,37 @@ const App = () => {
   const [weatherData, setWeatherData] = useState({
   } as IWeatherDataObj);
 
-  const getWeather = (myCity: string) => {
-    const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_WEATHER_KEY}&units=metric`;
-    axios
-      .get(cityUrl)
-      .then((response) => setWeatherData({
-        name: response.data.name,
-        country: response.data.sys.country,
-        wind: response.data.wind.speed,
-        clouds: response.data.weather[0].description,
-        temp: Math.round(response.data.main.temp),
-        feels_like: Math.round(response.data.main.feels_like),
-        pressure: response.data.main.pressure,
-        humidity: response.data.main.humidity,
-        icon: response.data.weather[0].icon,
-        error: undefined
-      }))
-      .catch(() => setWeatherData({
-        name: undefined,
-        country: undefined,
-        wind: undefined,
-        clouds: undefined,
-        temp: undefined,
-        feels_like: undefined,
-        pressure: undefined,
-        humidity: undefined,
-        icon: undefined,
-        error: `City "${myCity}" is not found`
-      }));
+  const getWeather = async (myCity: string) => {
+  const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_WEATHER_KEY}&units=metric`;
+  await axios
+    .get(cityUrl)
+    .then((response) => setWeatherData({
+      name: response.data.name,
+      country: response.data.sys.country,
+      wind: response.data.wind.speed,
+      clouds: response.data.weather[0].description,
+      temp: Math.round(response.data.main.temp),
+      feels_like: Math.round(response.data.main.feels_like),
+      pressure: response.data.main.pressure,
+      humidity: response.data.main.humidity,
+      icon: response.data.weather[0].icon,
+      error: undefined
+    }))
+    .catch(() => setWeatherData({
+      name: undefined,
+      country: undefined,
+      wind: undefined,
+      clouds: undefined,
+      temp: undefined,
+      feels_like: undefined,
+      pressure: undefined,
+      humidity: undefined,
+      icon: undefined,
+      error: `City "${myCity}" is not found`
+    }));
 
-  setAddDisabled(false);
-  };
+setAddDisabled(false);
+};
 
   useEffect(() => {
     // if something entered to the search string, run getWeather function
@@ -65,38 +63,15 @@ const App = () => {
 
   }, [myCity]);
 
-  // on the first render, user will see his location and weather
+  // the first render
   useEffect(() => {    
 
-    let localLatitude: number;
-    let localLongitude: number;
-    
-    navigator.geolocation.getCurrentPosition((position) => 
-    {    
-      localLatitude = position.coords.latitude;
-      localLongitude = position.coords.longitude;
-
-      axios
-      .get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${localLatitude}&lon=${localLongitude}&appid=${API_WEATHER_KEY}`)
-      .then((response) => {getWeather(response.data[0].name)})
-      .catch(() => setWeatherData({
-        name: undefined,
-        country: undefined,
-        wind: undefined,
-        clouds: undefined,
-        temp: undefined,
-        feels_like: undefined,
-        pressure: undefined,
-        humidity: undefined,
-        icon: undefined,
-        error: `Location is not defined, sorry`
-      }));
-    });      
-      
+    getWeather('Kyiv');
+     
   }, []); 
   
   return (
-    <div className="App">
+    <div className="App">      
       <Header />
       <SearchPanel
         getCity={getCity}
@@ -112,86 +87,3 @@ const App = () => {
 }
 
 export default App;
-
-
-// async version of getWeather
-  // async function getWeather(myCity: string) {
-
-  //   const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_WEATHER_KEY}&units=metric`;
-
-  //   try {
-  //     const response = await fetch(cityUrl);
-  //     const data = await response.json();
-  //     setWeatherData({
-  //       name: data.name,
-  //       country: data.sys.country,
-  //       wind: data.wind.speed,
-  //       clouds: data.weather[0].description,
-  //       temp: Math.round(data.main.temp),
-  //       feels_like: Math.round(data.main.feels_like),
-  //       pressure: data.main.pressure,
-  //       humidity: data.main.humidity,
-  //       icon: data.weather[0].icon,
-  //       error: undefined
-  //     });
-  //   }
-  //   catch (error) {      
-  //     setWeatherData({
-  //       name: undefined,
-  //       country: undefined,
-  //       wind: undefined,
-  //       clouds: undefined,
-  //       temp: undefined,
-  //       feels_like: undefined,
-  //       pressure: undefined,
-  //       humidity: undefined,
-  //       icon: undefined,
-  //       error: `City "${myCity}" is not found`
-  //     })
-  //   }
-
-  //   setAddDisabled(false);
-  // };
-
-
-  // fetch version of getweather
-  // const getWeather = (myCity: string) => {
-
-  //   const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_WEATHER_KEY}&units=metric`;
-
-  //   fetch(cityUrl)
-  //     .then((response) => response.json())
-  //     .then((data) => setWeatherData({
-  //       name: data.name,
-  //       country: data.sys.country,
-  //       wind: data.wind.speed,
-  //       clouds: data.weather[0].description,
-  //       temp: Math.round(data.main.temp),
-  //       feels_like: Math.round(data.main.feels_like),
-  //       pressure: data.main.pressure,
-  //       humidity: data.main.humidity,
-  //       icon: data.weather[0].icon,
-  //       error: undefined
-  //     }))
-  //     .catch((error) =>
-  //       error.response === undefined &&
-  //       setWeatherData({
-  //         name: undefined,
-  //         country: undefined,
-  //         wind: undefined,
-  //         clouds: undefined,
-  //         temp: undefined,
-  //         feels_like: undefined,
-  //         pressure: undefined,
-  //         humidity: undefined,
-  //         icon: undefined,
-  //         error: `City "${myCity}" is not found`
-  //       })
-  //     );
-
-  //   setAddDisabled(false);
-  // };
-
-// axios version of getweather
-
-  

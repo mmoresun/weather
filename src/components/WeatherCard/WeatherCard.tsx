@@ -80,7 +80,7 @@ const WeatherCard: React.FC<any> = ({ ...props }) => {
             <Card sx={{ minWidth: 250, maxWidth: 300, margin: 1, boxShadow: 6, padding: '0 0 10px 0' }} variant="outlined">
 
                 <CardContent>
-                    <Typography variant="body2">City/Region: <b>{cardData.name}</b></Typography>
+                    <Typography variant="body2">Weather at <b>{cardData.name}</b>:</Typography>
                     <Typography variant="body2">&#x1F321; Temperature: <b>{cardData.temp}°C</b></Typography>
                     <Typography variant="body2">&#9780; Wind: <b>{cardData.wind} m/s</b></Typography>
                     <Typography variant="body2">Sky: <b>{cardData.clouds}</b> </Typography>
