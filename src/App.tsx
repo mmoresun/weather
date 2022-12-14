@@ -9,9 +9,10 @@ import axios from 'axios';
 
 const API_WEATHER_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
-const App = () => {  
+const App = () => {
 
-  // 'Add to my button' enabled/disabled switcher
+  // 'Add to my list button' enabled/disabled switcher
+
   const [addDisabled, setAddDisabled] = useState<boolean>(false);
 
   // get and set value from search field
@@ -26,6 +27,7 @@ const App = () => {
   } as IWeatherDataObj);
 
   const getWeather = async (myCity: string) => {
+  
   const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_WEATHER_KEY}&units=metric`;
   await axios
     .get(cityUrl)
@@ -64,11 +66,9 @@ setAddDisabled(false);
   }, [myCity]);
 
   // the first render
-  useEffect(() => {    
-
+  useEffect(() => {
     getWeather('Kyiv');
-     
-  }, []); 
+  }, []);
   
   return (
     <div className="App">      

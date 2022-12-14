@@ -72,9 +72,8 @@ const WeatherCardsList: React.FC<IWeatherCardsListProps> = ({ weatherData, addDi
 
                     <Button
                         onClick={addNewCity}
-                    >
-                        Add to my list
-                    </Button>
+                                                
+                    >Add to my list</Button>
                 </div>}
             <p style={{display: weatherData.error ? '' : 'none'}}><b>{weatherData.error}</b></p>
             <Box
