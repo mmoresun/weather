@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders WeatherCard correctly 1`] = `
+<div
+  className="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-193eagd-MuiPaper-root-MuiCard-root"
+>
+  <div
+    className="MuiCardContent-root css-46bh2p-MuiCardContent-root"
+  >
+    <p
+      className="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+    >
+      Weather at 
+      <b />
+      :
+    </p>
+    <p
+      className="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+    >
+      🌡 Temperature: 
+      <b>
+        °C
+      </b>
+    </p>
+    <p
+      className="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+    >
+      ☴ Wind: 
+      <b>
+         m/s
+      </b>
+    </p>
+    <p
+      className="MuiTypography-root MuiTypography-body2 css-e784if-MuiTypography-root"
+    >
+      Sky: 
+      <b />
+       
+    </p>
+    <img
+      alt=""
+      src="https://openweathermap.org/img/wn/undefined@2x.png"
+    />
+  </div>
+  <div>
+    <button
+      className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-11qr2p8-MuiButtonBase-root-MuiButton-root"
+      disabled={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onContextMenu={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex={0}
+      type="button"
+    >
+      Details
+    </button>
+  </div>
+  <div
+    className="MuiCardActions-root MuiCardActions-spacing css-10r5to9-MuiCardActions-root"
+  >
+    <div
+      className="MuiBox-root css-1py8c8m"
+    >
+      <button
+        className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+        disabled={false}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onContextMenu={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={0}
+        type="button"
+      >
+        Refresh ↻
+      </button>
+      <button
+        className="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textError MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textError MuiButton-sizeMedium MuiButton-textSizeMedium css-10fi992-MuiButtonBase-root-MuiButton-root"
+        disabled={false}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onContextMenu={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={0}
+        type="button"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+`;
