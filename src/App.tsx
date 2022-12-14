@@ -12,6 +12,7 @@ const API_WEATHER_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 const App = () => {
 
   // 'Add to my list button' enabled/disabled switcher
+
   const [addDisabled, setAddDisabled] = useState<boolean>(false);
 
   // get and set value from search field
@@ -26,36 +27,37 @@ const App = () => {
   } as IWeatherDataObj);
 
   const getWeather = async (myCity: string) => {
-    const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_WEATHER_KEY}&units=metric`;
-    await axios
-      .get(cityUrl)
-      .then((response) => setWeatherData({
-        name: response.data.name,
-        country: response.data.sys.country,
-        wind: response.data.wind.speed,
-        clouds: response.data.weather[0].description,
-        temp: Math.round(response.data.main.temp),
-        feels_like: Math.round(response.data.main.feels_like),
-        pressure: response.data.main.pressure,
-        humidity: response.data.main.humidity,
-        icon: response.data.weather[0].icon,
-        error: undefined
-      }))
-      .catch(() => setWeatherData({
-        name: undefined,
-        country: undefined,
-        wind: undefined,
-        clouds: undefined,
-        temp: undefined,
-        feels_like: undefined,
-        pressure: undefined,
-        humidity: undefined,
-        icon: undefined,
-        error: `City "${myCity}" is not found`
-      }));
+  
+  const cityUrl = `https://api.openweathermap.org/data/2.5/weather?q=${myCity}&lang=en&appid=${API_WEATHER_KEY}&units=metric`;
+  await axios
+    .get(cityUrl)
+    .then((response) => setWeatherData({
+      name: response.data.name,
+      country: response.data.sys.country,
+      wind: response.data.wind.speed,
+      clouds: response.data.weather[0].description,
+      temp: Math.round(response.data.main.temp),
+      feels_like: Math.round(response.data.main.feels_like),
+      pressure: response.data.main.pressure,
+      humidity: response.data.main.humidity,
+      icon: response.data.weather[0].icon,
+      error: undefined
+    }))
+    .catch(() => setWeatherData({
+      name: undefined,
+      country: undefined,
+      wind: undefined,
+      clouds: undefined,
+      temp: undefined,
+      feels_like: undefined,
+      pressure: undefined,
+      humidity: undefined,
+      icon: undefined,
+      error: `City "${myCity}" is not found`
+    }));
 
-    setAddDisabled(false);
-  };
+setAddDisabled(false);
+};
 
   useEffect(() => {
     // if something entered to the search string, run getWeather function
@@ -65,13 +67,11 @@ const App = () => {
 
   // the first render
   useEffect(() => {
-
     getWeather('Kyiv');
-
   }, []);
-
+  
   return (
-    <div className="App">
+    <div className="App">      
       <Header />
       <SearchPanel
         getCity={getCity}
