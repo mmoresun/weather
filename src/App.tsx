@@ -68,6 +68,29 @@ const App = () => {
 
     getWeather('Kyiv');
 
+    // let localLatitude: number;
+    // let localLongitude: number;
+
+    // navigator.geolocation.getCurrentPosition(async (position) => {
+    //   localLatitude = position.coords.latitude;
+    //   localLongitude = position.coords.longitude;
+
+    //   await axios
+    //     .get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${localLatitude}&lon=${localLongitude}&appid=${API_WEATHER_KEY}`)
+    //     .then((response) => { getWeather(response.data[0].name) })
+    //     .catch(() => setWeatherData({
+    //       name: undefined,
+    //       country: undefined,
+    //       wind: undefined,
+    //       clouds: undefined,
+    //       temp: undefined,
+    //       feels_like: undefined,
+    //       pressure: undefined,
+    //       humidity: undefined,
+    //       icon: undefined,
+    //       error: `Location is not defined, sorry`
+    //     }));
+    // });
   }, []);
 
   return (
