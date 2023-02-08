@@ -6,8 +6,9 @@ export interface IGeoLocateObj {
 
 export interface IWeatherCardsListProps {
   weatherData: IWeatherDataObj;
-  addDisabled: boolean;
-  setAddDisabled: React.Dispatch<React.SetStateAction<boolean>>
+  addDisabled: boolean;    
+  setAddDisabled: React.Dispatch<React.SetStateAction<boolean>>,
+  cityInputRef: any  
 }
 
 export type MyFormField = {

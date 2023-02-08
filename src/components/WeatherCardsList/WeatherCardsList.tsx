@@ -16,7 +16,7 @@ import { addCityAction } from '../../store/redusers/cityReducer';
 
 const API_WEATHER_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
-const WeatherCardsList: React.FC<IWeatherCardsListProps> = ({ weatherData, addDisabled, setAddDisabled }) => {
+const WeatherCardsList: React.FC<IWeatherCardsListProps> = ({ weatherData, addDisabled, cityInputRef, setAddDisabled }) => {
 
     const myCityList: any = useSelector((state: IReducer) => state.city);
 
@@ -45,6 +45,8 @@ const WeatherCardsList: React.FC<IWeatherCardsListProps> = ({ weatherData, addDi
 
         setAddDisabled(true); // hide search results after the city is added to the list
 
+        cityInputRef.current.value = ''; // clear the search input
+
     };
 
     // mapping myCityList to get a list of weather cards
@@ -56,7 +58,7 @@ const WeatherCardsList: React.FC<IWeatherCardsListProps> = ({ weatherData, addDi
         )
     }));
 
-    // re-render component every time then citylist is changed
+    // re-render component every time when citylist is changed
     useEffect(() => {
     }, [myCityList])
 
@@ -64,7 +66,7 @@ const WeatherCardsList: React.FC<IWeatherCardsListProps> = ({ weatherData, addDi
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             {weatherData.name &&
-                <div style={{ display: addDisabled ? 'none' : 'block', border: '1px dashed black', padding: '0 10px 10px 10px', width: '250px', background: 'rgba(255, 255, 255, .3)', margin: '0 0 20px 0' }}>
+                <div style={{ display: addDisabled ? 'none' : 'block', border: '1px dashed black', padding: '0 10px 10px 10px', width: '232px', background: 'rgba(255, 255, 255, .3)', margin: '0 0 20px 0' }}>
                     <p>City or region: <b>{weatherData.name}</b></p>
                     <p>Local temperature: <b>{weatherData.temp}°C</b></p>
                     <p>Wind: <b>{weatherData.wind} m/s</b></p>
