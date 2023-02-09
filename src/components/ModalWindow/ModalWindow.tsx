@@ -15,10 +15,7 @@ import { windDirection } from '../smalls/windDirection/windDirection';
 
 
 // materialize ui modal window settings (it would be easier for me to write my own)
-const BackdropUnstyled = React.forwardRef<
-    HTMLDivElement,
-    { open?: boolean; className: string }
->((props, ref) => {
+const BackdropUnstyled = React.forwardRef<HTMLDivElement, { open?: boolean; className: string }>((props, ref) => {
     const { open, className, ...other } = props;
     return (
         <div
@@ -39,6 +36,8 @@ const Modal = styled(ModalUnstyled)`
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 10px;
+  
 `;
 
 const Backdrop = styled(BackdropUnstyled)`
@@ -49,7 +48,7 @@ const Backdrop = styled(BackdropUnstyled)`
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;  
 `;
 
 const style = (theme: Theme) => ({
@@ -57,12 +56,14 @@ const style = (theme: Theme) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    maxWidth: 400,
-    minWidth: 180,
+    width: '40%',
+    maxWidth: 500,
+    minWidth: 200,
     backgroundColor: theme.palette.mode === 'dark' ? '#0A1929' : 'white',
-    border: '2px solid currentColor',
+    border: '1px solid currentColor',
     boxShadow: 24,
     padding: '16px 32px 24px 32px',
+    borderRaduis: 15,
 });
 
 export default function ModalWindow({ ...props }) {
@@ -79,9 +80,9 @@ export default function ModalWindow({ ...props }) {
                 slots={{ backdrop: Backdrop }}
             >
                 {/* detailed info for the city at modal window */}
-                
-                <Fade in={props.open} timeout={300}> 
-                    <Box sx={style}>                        
+
+                <Fade in={props.open} timeout={300}>
+                    <Box sx={style} style={{ borderRadius: '10px' }}>
                         <h2 id="transition-modal-title">Weather at {props.cardData.name}, {props.cardData.country}</h2>
                         <span id="transition-modal-description" style={{ marginTop: '16px' }}>
                             <Typography variant="body2">Temperature: <b>{props.cardData.temp}°C</b></Typography>
