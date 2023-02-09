@@ -63,7 +63,7 @@ const style = (theme: Theme) => ({
     border: '1px solid currentColor',
     boxShadow: 24,
     padding: '16px 32px 24px 32px',
-    borderRaduis: 15,    
+    borderRaduis: 15,
 });
 
 export default function ModalWindow({ ...props }) {
@@ -77,12 +77,12 @@ export default function ModalWindow({ ...props }) {
                 open={props.open}
                 onClose={props.handleClose}
                 closeAfterTransition
-                slots={{ backdrop: Backdrop }}                
+                slots={{ backdrop: Backdrop }}
             >
                 {/* detailed info for the city at modal window */}
 
                 <Fade in={props.open} timeout={300}>
-                    <Box sx={style} style={{borderRadius: '10px'}}>
+                    <Box sx={style} style={{ borderRadius: '10px' }}>
                         <h2 id="transition-modal-title">Weather at {props.cardData.name}, {props.cardData.country}</h2>
                         <span id="transition-modal-description" style={{ marginTop: '16px' }}>
                             <Typography variant="body2">Temperature: <b>{props.cardData.temp}°C</b></Typography>
