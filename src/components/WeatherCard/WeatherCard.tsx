@@ -49,7 +49,7 @@ const WeatherCard: React.FC<any> = ({ ...props }) => {
     // trigger useEffect every time when the refresh button is clicked
     const [isRefresh, setIsreflesh] = useState(true);
     const handleRefresh = () => {
-        setIsreflesh(!isRefresh)
+        setIsreflesh(prev => !prev)
     }
 
     // when the refresh button is clicked, isRefresh value is changed, and new data fetching started
@@ -77,7 +77,7 @@ const WeatherCard: React.FC<any> = ({ ...props }) => {
 
     return (
         <>
-            <Card sx={{ minWidth: 250, maxWidth: 300, margin: 1, boxShadow: 6, padding: '0 0 10px 0' }} variant="outlined">
+            <Card sx={{ minWidth: 250, maxWidth: 300, margin: 1, boxShadow: 6, padding: '0 0 10px 0', borderRadius: '10px' }} variant="outlined">
 
                 <CardContent>
                     <Typography variant="body2">Weather at <b>{cardData.name}</b>:</Typography>

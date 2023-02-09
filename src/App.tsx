@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import SearchPanel from './components/SearchPanel/SearchPanel';
 import Header from './components/Header/Header';
@@ -15,10 +15,12 @@ const App = () => {
 
   const [addDisabled, setAddDisabled] = useState<boolean>(false);
 
+  const cityInputRef = useRef<any>(null);
+
   // get and set value from search field
   const [myCity, setMyCity] = useState<string>('');
 
-  const getCity = (e: MyFormSubmitEvent): void => {
+  const setCity = (e: MyFormSubmitEvent): void => {
     e.preventDefault();
     setMyCity(e.currentTarget.city.value);
   };
@@ -67,17 +69,42 @@ setAddDisabled(false);
 
   // the first render
   useEffect(() => {
-    getWeather('Kyiv');
+
+    let localLatitude: number;
+    let localLongitude: number;
+
+    navigator.geolocation.getCurrentPosition(async (position) => {
+      localLatitude = position.coords.latitude;
+      localLongitude = position.coords.longitude;
+
+      await axios
+        .get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${localLatitude}&lon=${localLongitude}&appid=${API_WEATHER_KEY}`)
+        .then((response) => { getWeather(response.data[0].name) })
+        .catch(() => setWeatherData({
+          name: undefined,
+          country: undefined,
+          wind: undefined,
+          clouds: undefined,
+          temp: undefined,
+          feels_like: undefined,
+          pressure: undefined,
+          humidity: undefined,
+          icon: undefined,
+          error: `Location is not defined, sorry`
+        }));
+    });
   }, []);
   
   return (
     <div className="App">      
       <Header />
       <SearchPanel
-        getCity={getCity}
+        setCity={setCity}
         setMyCity={setMyCity}
+        inputRef={cityInputRef}
       />
       <WeatherCardsList
+        cityInputRef={cityInputRef}
         addDisabled={addDisabled}
         setAddDisabled={setAddDisabled}
         weatherData={weatherData}
