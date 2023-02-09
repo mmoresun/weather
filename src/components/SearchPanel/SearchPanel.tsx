@@ -6,23 +6,21 @@ import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
 // import { SearchPanelProps } from "../../types/types";
 
-const SearchPanel: React.FC<any> = ({ getCity, inputRef }) => {    
+const SearchPanel: React.FC<any> = ({ setCity, inputRef }) => {
 
     return (
         <div style={{ marginBottom: '30px' }}>
             <Box
                 component="form"
-                onSubmit={getCity}
+                onSubmit={setCity}
                 name='searchpanel'
             >
-                <TextField                    
+                <TextField
                     size='small'
                     type="text"
                     name='city'
                     placeholder='Enter city'
                     inputRef={inputRef}
-                    
-                // onChange={(e) => setMyCity(e.target.value)}
                 />
                 <Button
                     type="submit"

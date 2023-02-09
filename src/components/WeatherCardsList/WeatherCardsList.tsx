@@ -66,7 +66,7 @@ const WeatherCardsList: React.FC<IWeatherCardsListProps> = ({ weatherData, addDi
 
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             {weatherData.name &&
-                <div style={{ display: addDisabled ? 'none' : 'block', border: '1px dashed black', padding: '0 10px 10px 10px', width: '232px', background: 'rgba(255, 255, 255, .3)', margin: '0 0 20px 0' }}>
+                <div style={{ display: addDisabled ? 'none' : 'block', border: '1px dashed black', padding: '0 10px 10px 10px', width: '232px', borderRadius: '10px', background: 'rgba(255, 255, 255, .3)', margin: '0 0 20px 0' }}>
                     <p>City or region: <b>{weatherData.name}</b></p>
                     <p>Local temperature: <b>{weatherData.temp}°C</b></p>
                     <p>Wind: <b>{weatherData.wind} m/s</b></p>

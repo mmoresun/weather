@@ -1,4 +1,3 @@
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,7 +12,7 @@ export default function Header() {
   return (
 
     <Box sx={{ flexGrow: 1, margin: 1, paddingBottom: 2 }}>
-      <AppBar position="static" sx={{ background: 'rgb(113, 141, 189)' }}>
+      <AppBar position="static" sx={{ background: 'rgb(113, 141, 189)', borderRadius: '10px' }}>
         <Toolbar sx={{}}>
           <IconButton
             size="large"

@@ -14,12 +14,12 @@ const App = () => {
   // 'Add to my list button' enabled/disabled switcher
   const [addDisabled, setAddDisabled] = useState<boolean>(false);
 
-  const cityInputRef = useRef<any>(null);  
+  const cityInputRef = useRef<any>(null);
 
   // get and set value from search field
   const [myCity, setMyCity] = useState<string>('');
 
-  const getCity = (e: MyFormSubmitEvent): void => {
+  const setCity = (e: MyFormSubmitEvent): void => {
     e.preventDefault();
     setMyCity(e.currentTarget.city.value);
   };
@@ -101,7 +101,7 @@ const App = () => {
     <div className="App">
       <Header />
       <SearchPanel
-        getCity={getCity}
+        setCity={setCity}
         setMyCity={setMyCity}
         inputRef={cityInputRef}
       />
